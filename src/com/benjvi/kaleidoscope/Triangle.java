@@ -1,3 +1,4 @@
+package com.benjvi.kaleidoscope;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 

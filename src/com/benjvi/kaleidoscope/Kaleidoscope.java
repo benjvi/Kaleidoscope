@@ -1,3 +1,4 @@
+package com.benjvi.kaleidoscope;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
