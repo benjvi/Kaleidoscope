@@ -21,15 +21,21 @@ public class KalPanel extends JPanel {
  
 	
 	public KalPanel(BufferedImage image) {
+		//just initialising values
 		this.img = image;
-		kal = new Kaleidoscope(2000, 1000, img);
+		this.w = 1000;
+	        this.h = 1000;
+		this.kal = new Kaleidoscope(w, h, img);
 	}
 
 	public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	        setBackground(Color.white);
-	        w = 1000;
-	        h = 1000;
+	        if (Kaleidoscope.getWidth() < w || Kaleidoscope.getHeight() < h) {
+	        	//need to make a new kaleidoscope
+	        	kal = new Kaleidoscope(w, h, img);
+	        }
+	        
 	        Graphics2D g2 = (Graphics2D) g.create();
 	 
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
