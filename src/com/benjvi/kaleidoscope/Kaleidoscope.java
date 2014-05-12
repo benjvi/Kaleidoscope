@@ -7,12 +7,12 @@ import java.util.List;
 
 
 public class Kaleidoscope {
-	int imagewidth, imageheight;
-	int outputcenterx, outputcentery;
-	int aperturesize;
-	double orientationdeg;
-	double zoom;
-	private List<List<Triangle>> reflectionOrdersList;
+	final private int imagewidth, imageheight;
+	final private int outputcenterx, outputcentery;
+	final private int aperturesize;
+	final private double orientationdeg;
+	final private double zoom;
+	final private List<List<Triangle>> reflectionOrdersList;
 	
 	public Kaleidoscope (int panelwidth, int panelheight) {
 		reflectionOrdersList = new ArrayList<List<Triangle>>();
