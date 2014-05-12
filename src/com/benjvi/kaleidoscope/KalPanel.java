@@ -30,8 +30,7 @@ public class KalPanel extends JPanel {
 	        setBackground(Color.white);
 	        w = 1000;
 	        h = 1000;
-	        Graphics2D g2;
-	        g2 = (Graphics2D) g;
+	        Graphics2D g2 = (Graphics2D) g.create();
 	 
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 	                            RenderingHints.VALUE_ANTIALIAS_ON);
