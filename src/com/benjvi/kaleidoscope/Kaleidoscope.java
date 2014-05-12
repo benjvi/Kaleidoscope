@@ -140,4 +140,13 @@ public class Kaleidoscope {
 		}
 		return true;
 	}
+	
+	public int getWidth() {
+		return imagewidth;
+	}
+	
+	public int getHeight() {
+		return imagewidth;
+	}
+}
 }
