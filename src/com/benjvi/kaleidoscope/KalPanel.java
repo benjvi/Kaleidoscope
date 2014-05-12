@@ -56,12 +56,10 @@ public class KalPanel extends JPanel {
 	
 		private void drawTriangle(Shape triangle, AffineTransform transform, Graphics2D g) {
 			Rectangle r = triangle.getBounds();
-	        
-	        g.setTransform(transform);
-	        
-	        g.setClip(triangle);
-	        g.drawImage(img, r.x, r.y, r.width, r.height, this);
-			
+	                g.setTransform(transform);
+	                g.setClip(triangle);
+	        	Boolean drawSucceeded = g.drawImage(img, r.x, r.y, r.width, r.height, this);
+			assert(drawSucceeded);	
 		}
 		
 
