@@ -31,7 +31,7 @@ public class KalPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	        setBackground(Color.white);
-	        if (Kaleidoscope.getWidth() < w || Kaleidoscope.getHeight() < h) {
+	        if (kal.getWidth() < w || kal.getHeight() < h) {
 	        	//need to make a new kaleidoscope
 	        	kal = new Kaleidoscope(w, h, img);
 	        }
@@ -50,7 +50,7 @@ public class KalPanel extends JPanel {
 	    }
 	
 		private void drawKaleidoscope(Graphics2D g) {
-			for (List<Triangle> reflectionOrders : kal.reflectionOrdersList) {
+			for (List<Triangle> reflectionOrders : kal.getReflectionsList()) {
 				for (Triangle tri : reflectionOrders) {
 					AffineTransform transform = tri.getTransformMatrix();
 					Shape triangle = tri.toPolygon();
