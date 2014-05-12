@@ -7,22 +7,20 @@ import java.util.List;
 
 
 public class Kaleidoscope {
-	BufferedImage srcimage;
 	int imagewidth, imageheight;
 	int outputcenterx, outputcentery;
 	int aperturesize;
 	double orientationdeg;
 	double zoom;
-	public List<List<Triangle>> reflectionOrdersList;
+	private List<List<Triangle>> reflectionOrdersList;
 	
-	public Kaleidoscope (int panelwidth, int panelheight, BufferedImage origimage) {
+	public Kaleidoscope (int panelwidth, int panelheight) {
 		reflectionOrdersList = new ArrayList<List<Triangle>>();
-		this.srcimage = origimage;
 		this.imagewidth = panelwidth;
 		this.imageheight = panelheight;
 		setDefaultParameters();
 		generate();
-		//usethe panelwidth and panelheight to set the limits of the generated kaleidoscope
+		//usethe panelwidth and panelheight to set the limits of thes generated kaleidoscope
 	}
 	
 	private void setDefaultParameters() {
@@ -34,12 +32,15 @@ public class Kaleidoscope {
 	}
 	
 	private void generate() {
-		//create the initial triangle 
-		//this is the image produced by light which goes straight through the kaleidoscope without hitting any mirrors
+		//define the bounds of the the initial triangle 
+		//this is the image produced by light which goes straight through the kaleidoscope 
+		//without hitting any mirrors
 		List<Triangle> nextOrderReflection;
 		Triangle origtri = createUnreflectedImage();
 		ArrayList<Triangle> origTriList = new ArrayList<Triangle>();
 		origTriList.add(origtri);
+		//step through the transformations to define all the triangles we will need
+		//to produce a kaleidoscope pattern with the defined dimensions
 		reflectionOrdersList.add(origTriList);
 		nextOrderReflection = createNextOrderReflection(origTriList);
 		reflectionOrdersList.add(nextOrderReflection);
@@ -147,6 +148,10 @@ public class Kaleidoscope {
 	
 	public int getHeight() {
 		return imagewidth;
+	}
+	
+	public List<List<Triangle>> getReflectionsList() throws UnsupportedOperationException {
+		return Collections.unmodifiableList(reflectionOrdersList);
 	}
 }
 }
