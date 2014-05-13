@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 
-public class KalPanel extends JPanel {
+public class KalPanel extends Panel {
 	BufferedImage img;
     int w, h;
     Kaleidoscope kal;
@@ -23,21 +23,23 @@ public class KalPanel extends JPanel {
 	public KalPanel(BufferedImage image) {
 		//just initialising values
 		this.img = image;
-		this.w = 1000;
-	        this.h = 1000;
-		this.kal = new Kaleidoscope(w, h, img);
+		this.w = 400;
+	    this.h = 400;
+		this.kal = new Kaleidoscope(w, h);
+		//this.setOpaque(true);
 	}
 
-	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	        setBackground(Color.white);
-	        if (kal.getWidth() < w || kal.getHeight() < h) {
+	public void paint(Graphics g) {
+		 	super.paint(g);
+	        
+	    	setBackground(Color.white);
+	        if (kal.getWidth() < this.getWidth() || kal.getHeight() < this.getHeight()) {
 	        	//need to make a new kaleidoscope
-	        	kal = new Kaleidoscope(w, h, img);
+	        	kal = new Kaleidoscope(this.getWidth(), this.getHeight());
 	        }
 	        
-	        Graphics2D g2 = (Graphics2D) g.create();
-	 
+	        Graphics2D g2 = (Graphics2D) g;
+	        
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 	                            RenderingHints.VALUE_ANTIALIAS_ON);
 	 
@@ -45,7 +47,8 @@ public class KalPanel extends JPanel {
 	                            RenderingHints.VALUE_RENDER_QUALITY);
 
 	        drawKaleidoscope(g2);
-
+	        
+	        
 
 	    }
 	
@@ -54,7 +57,14 @@ public class KalPanel extends JPanel {
 				for (Triangle tri : reflectionOrders) {
 					AffineTransform transform = tri.getTransformMatrix();
 					Shape triangle = tri.toPolygon();
-					drawTriangle(triangle, transform, g);
+					drawTriangle(triangle, transform, g);					
+				}
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					Thread.currentThread().interrupt();
+					e.printStackTrace();
 				}
 				
 			}
@@ -62,9 +72,9 @@ public class KalPanel extends JPanel {
 	
 		private void drawTriangle(Shape triangle, AffineTransform transform, Graphics2D g) {
 			Rectangle r = triangle.getBounds();
-	                g.setTransform(transform);
-	                g.setClip(triangle);
-	        	Boolean drawSucceeded = g.drawImage(img, r.x, r.y, r.width, r.height, this);
+	        g.setTransform(transform);
+	        g.setClip(triangle);
+	      	Boolean drawSucceeded = g.drawImage(img, r.x, r.y, r.width, r.height, this);
 			assert(drawSucceeded);	
 		}
 		

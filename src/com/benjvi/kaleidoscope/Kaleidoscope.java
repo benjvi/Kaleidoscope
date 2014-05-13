@@ -3,6 +3,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -18,20 +19,19 @@ public class Kaleidoscope {
 		reflectionOrdersList = new ArrayList<List<Triangle>>();
 		this.imagewidth = panelwidth;
 		this.imageheight = panelheight;
-		setDefaultParameters();
-		generate();
+		
+		//set default parameters
+		outputcenterx = imagewidth/2;
+		outputcentery = imageheight/2;
+		aperturesize = Math.min(imagewidth, imageheight)/2;
+	    orientationdeg = 0;
+	    zoom = 1.0;
+		
+	    generateTransforms();
 		//usethe panelwidth and panelheight to set the limits of thes generated kaleidoscope
 	}
 	
-	private void setDefaultParameters() {
-		outputcenterx = imagewidth/2;
-		outputcentery = imageheight/2;
-		aperturesize = Math.min(imagewidth, imageheight)/5;
-	    orientationdeg = 0;
-	    zoom = 1.0;
-	}
-	
-	private void generate() {
+	private void generateTransforms() {
 		//define the bounds of the the initial triangle 
 		//this is the image produced by light which goes straight through the kaleidoscope 
 		//without hitting any mirrors
@@ -154,4 +154,4 @@ public class Kaleidoscope {
 		return Collections.unmodifiableList(reflectionOrdersList);
 	}
 }
-}
+

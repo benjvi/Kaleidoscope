@@ -35,7 +35,7 @@ public class Main {
         });
  
         f.getContentPane().add(kPanel, BorderLayout.CENTER);
-        f.setSize(new Dimension(550, 200));
+        f.setSize(new Dimension(400, 400));
         f.setVisible(true);
        
 		
