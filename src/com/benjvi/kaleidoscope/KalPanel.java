@@ -6,6 +6,10 @@ import java.awt.Panel;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -14,7 +18,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 
-public class KalPanel extends Panel {
+public class KalPanel extends JPanel {
 	BufferedImage img;
     int w, h;
     Kaleidoscope kal;
@@ -25,21 +29,16 @@ public class KalPanel extends Panel {
 		this.img = image;
 		this.w = 400;
 	    this.h = 400;
-		this.kal = new Kaleidoscope(w, h);
-		//this.setOpaque(true);
+		this.setOpaque(true);
+		  	
+		setBackground(Color.white);
+		
 	}
 
-	public void paint(Graphics g) {
-		 	super.paint(g);
-	        
-	    	setBackground(Color.white);
-	        if (kal.getWidth() < this.getWidth() || kal.getHeight() < this.getHeight()) {
-	        	//need to make a new kaleidoscope
-	        	kal = new Kaleidoscope(this.getWidth(), this.getHeight());
-	        }
-	        
-	        Graphics2D g2 = (Graphics2D) g;
-	        
+	public void paintComponent(Graphics g) {
+			this.kal = new Kaleidoscope(getWidth(), getHeight());
+	        Graphics2D g2 = (Graphics2D) g.create();
+	        super.paintComponent(g2);
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 	                            RenderingHints.VALUE_ANTIALIAS_ON);
 	 
@@ -47,7 +46,7 @@ public class KalPanel extends Panel {
 	                            RenderingHints.VALUE_RENDER_QUALITY);
 
 	        drawKaleidoscope(g2);
-	        
+	        g2.dispose();
 	        
 
 	    }
@@ -59,13 +58,7 @@ public class KalPanel extends Panel {
 					Shape triangle = tri.toPolygon();
 					drawTriangle(triangle, transform, g);					
 				}
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					Thread.currentThread().interrupt();
-					e.printStackTrace();
-				}
+				
 				
 			}
 		}

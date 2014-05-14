@@ -23,7 +23,7 @@ public class Kaleidoscope {
 		//set default parameters
 		outputcenterx = imagewidth/2;
 		outputcentery = imageheight/2;
-		aperturesize = Math.min(imagewidth, imageheight)/2;
+		aperturesize = Math.min(imagewidth, imageheight)/5;
 	    orientationdeg = 0;
 	    zoom = 1.0;
 		
