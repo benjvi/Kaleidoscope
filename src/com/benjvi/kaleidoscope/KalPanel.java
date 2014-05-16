@@ -19,9 +19,12 @@ import javax.swing.JPanel;
 
 
 public class KalPanel extends JPanel {
+	//refer to the following to implement best practices here:
+	//http://stackoverflow.com/questions/13022754/java-bouncing-ball/13022788#13022788
+	//http://stackoverflow.com/questions/12642852/the-images-are-not-loading/12648265#12648265
 	BufferedImage img;
-    int w, h;
-    Kaleidoscope kal;
+    	int w, h;
+    	Kaleidoscope kal;
  
 	
 	public KalPanel(BufferedImage image) {
