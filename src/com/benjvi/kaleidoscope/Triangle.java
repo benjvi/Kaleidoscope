@@ -4,28 +4,32 @@ import java.awt.geom.AffineTransform;
 
 
 public class Triangle {
-	int x1, y1, x2, y2, x3, y3;
-	double orientationdeg;
-	int centerx, centery;
-	Boolean isflippedx, isflippedy;
-	
+	private int x1, y1, x2, y2, x3, y3;
+	private double orientationdeg;
+	private int centerx, centery;
+	private Boolean isflippedx, isflippedy;
+	private int size;
 	
 	public Triangle(int size) {
 		//creates a triangle in the default orientation, at the origin
+		//default orientation has the orientation pointing upwards (point one at the top) 
 		//size = distance from the center to the vertices
-		x1 = (int)Math.round( (double) size * Math.sin(Math.toRadians(180))); 
-		y1 = (int)Math.round( (double) size * Math.cos(Math.toRadians(180)));
+		this(size, 0, 0);
+	}
+	
+	public Triangle(int size, int centerx, int centery) {
+		x1 = centerx + (int)Math.round( (double) size * Math.sin(Math.toRadians(180))); 
+		y1 = centery + (int)Math.round( (double) size * Math.cos(Math.toRadians(180)));
 		
-		x2 = (int)Math.round( (double) size * Math.sin(Math.toRadians(60))); 
-		y2 = (int)Math.round( (double) size * Math.cos(Math.toRadians(60))); 
+		x2 = centerx + (int)Math.round( (double) size * Math.sin(Math.toRadians(60))); 
+		y2 = centery + (int)Math.round( (double) size * Math.cos(Math.toRadians(60))); 
 
-		x3 = (int)Math.round( (double) size * Math.sin(Math.toRadians(-60))); 
-		y3 = (int)Math.round( (double) size * Math.cos(Math.toRadians(-60)));
+		x3 = centerx + (int)Math.round( (double) size * Math.sin(Math.toRadians(-60))); 
+		y3 = centery + (int)Math.round( (double) size * Math.cos(Math.toRadians(-60)));
 		orientationdeg = 0;
-		centerx = 0;
-		centery = 0;
 		isflippedx= false;
 		isflippedy = false;
+		this.size = size;
 	}
 	
 	public Polygon toPolygon() {
@@ -86,5 +90,15 @@ public class Triangle {
 	}
 	public int getYPosition() {
 		return centery;
+	}
+	
+	public Triangle clone() {
+		Triangle newTri = new Triangle(this.size);
+		newTri.setOrientation(orientationdeg);
+		newTri.setCenter(getXPosition(), getYPosition());
+		if (this.isFlippedHorizontally()) {
+			newTri.isflippedx=true;
+		}
+		return newTri;
 	}
 }

@@ -13,6 +13,7 @@ import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -20,23 +21,25 @@ import javax.swing.JPanel;
 
 public class KalPanel extends JPanel {
 	BufferedImage img;
-    int w, h;
     Kaleidoscope kal;
  
 	
-	public KalPanel(BufferedImage image) {
+	public KalPanel(BufferedImage image, Kaleidoscope kal) {
 		//just initialising values
 		this.img = image;
-		this.w = 400;
-	    this.h = 400;
+		this.kal = kal;
 		this.setOpaque(true);
-		  	
 		setBackground(Color.white);
 		
 	}
 
+	public void setKaleidoscope(Kaleidoscope kal) {
+		this.kal = kal;
+	}
+	
 	public void paintComponent(Graphics g) {
-			this.kal = new Kaleidoscope(getWidth(), getHeight());
+			g.clearRect(0, 0, WIDTH, HEIGHT);
+			//this.kal = new Kaleidoscope(getWidth(), getHeight());
 	        Graphics2D g2 = (Graphics2D) g.create();
 	        super.paintComponent(g2);
 	        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -45,12 +48,12 @@ public class KalPanel extends JPanel {
 	        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
 	                            RenderingHints.VALUE_RENDER_QUALITY);
 
-	        drawKaleidoscope(g2);
+	        drawPrimitiveCell(g2);
 	        g2.dispose();
 	        
 
 	    }
-	
+		/*
 		private void drawKaleidoscope(Graphics2D g) {
 			for (List<Triangle> reflectionOrders : kal.getReflectionsList()) {
 				for (Triangle tri : reflectionOrders) {
@@ -60,6 +63,15 @@ public class KalPanel extends JPanel {
 				}
 				
 				
+			}
+		}
+		*/
+		private void drawPrimitiveCell(Graphics2D g) {
+			LinkedList<Triangle> primitiveCell = new LinkedList<Triangle>(kal.allCells);
+			Triangle tri;
+			while (primitiveCell.peek()!=null) {
+				tri = primitiveCell.poll();
+				drawTriangle(tri.toPolygon(), tri.getTransformMatrix(), g);
 			}
 		}
 	

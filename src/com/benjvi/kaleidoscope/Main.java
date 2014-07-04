@@ -21,63 +21,44 @@ import java.awt.Frame;
 public class Main {
 	public static void main(String[] args) {
 		final String imagePath = args[0];
+		//load in the image from the supplied path
+		BufferedImage img = null;
+		try {
+		    img = ImageIO.read(new File(imagePath));
+		  
+		    //initialise the kaleidoscopeImage
+		    //BufferedImage kaleidoscope = KaleidoscopeGenerator.createImage(img);
+		    //KaleidoscopeGenerator.saveImage(kaleidoscope);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final BufferedImage loadedImg = img;
+		KaleidoscopeFactory.updateCurrentInstance(10, 10);
+
+
+		final KalPanel kPanel = new KalPanel(loadedImg, KaleidoscopeFactory.getCurrentInstance());
+		
+		final JFrame f = new JFrame("Kaleidoscope");
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override
 			public void run()
             {
-				//load in the image from the supplied path
-				BufferedImage img = null;
-				try {
-				    img = ImageIO.read(new File(imagePath));
-				  
-				    //initialise the kaleidoscopeImage
-				    //BufferedImage kaleidoscope = KaleidoscopeGenerator.createImage(img);
-				    //KaleidoscopeGenerator.saveImage(kaleidoscope);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				final BufferedImage loadedImg = img;
-				final KalPanel kPanel = new KalPanel(img);
-				
-				final JFrame f = new JFrame("Kaleidoscope");
-				f.getContentPane().add(kPanel, BorderLayout.CENTER);
+				f.setSize(new Dimension(1500, 800));
 		        
-		        f.addWindowListener(new WindowAdapter() {
+				f.getContentPane().add(kPanel, BorderLayout.CENTER);
+				f.addWindowListener(new WindowAdapter() {
 		            public void windowClosing(WindowEvent e) {System.exit(0);}
 		        });
-		        f.addComponentListener(new ComponentListener() 
-		        {  
-		            public void componentResized(ComponentEvent evt) {
-		            	f.getContentPane().remove(kPanel);
-		            	f.getContentPane().add(new KalPanel(loadedImg));
-		            }
-
-					@Override
-					public void componentHidden(ComponentEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void componentMoved(ComponentEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void componentShown(ComponentEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-		        });
-		        f.setSize(new Dimension(400, 400));
 		        f.setVisible(true);
+				
             }
 		});
-		
-       
+		KaleidoscopeFactory kalSequence = new KaleidoscopeFactory(kPanel,f);
+		Thread kalGenerator = new Thread(kalSequence);
+		kalGenerator.start();
+
 		
 	}
 }
